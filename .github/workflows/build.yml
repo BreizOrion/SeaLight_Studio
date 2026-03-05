@@ -51,8 +51,8 @@ jobs:
         with:
           executable-path: 'artifacts/Windows-SeaLight_Studio/SeaLight_Studio.exe'
           signed-executable-name: 'SeaLight_Studio.exe'
-          certificate-base64: ${{ secrets.CERTIFICATE_BASE64 }}
-          certificate-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+          certificate-base64: ${{ secrets.CERTIFICATE_BASE64 }} # missing certificate
+          certificate-password: ${{ secrets.CERTIFICATE_PASSWORD }} # missing certificate
 
   release:
     needs: build
