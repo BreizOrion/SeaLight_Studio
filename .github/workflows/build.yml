@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Windows-SeaLight_Studio-SIGNED 
-          path: SeaLight_Studio_Signed.exe
+          path: ./signing-work/SeaLight_Studio_Signed.exe
           retention-days: 1
 
 
