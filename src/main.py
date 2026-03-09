@@ -314,6 +314,7 @@ class Application(ctk.CTk):
         self.bind("<Up>", self.decal_handle)
         self.bind("<Down>", self.decal_handle)
         self.bind("r", self.resize_handle)
+        self.bind("<Control-q>", lambda e: self.quit())
 
     def _file_loaded(self):
         """
