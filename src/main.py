@@ -511,7 +511,14 @@ class Application(ctk.CTk):
         self.ax_photo.set_autoscale_on(True)
         self.ax_photo.relim()
         self.ax_photo.autoscale_view()
+        self.fig_photo.tight_layout()
         self.canvas_photo.draw()
+
+        self.ax_color.set_autoscale_on(True)
+        self.ax_color.relim()
+        self.ax_color.autoscale_view()
+        self.fig_color.tight_layout()
+        self.canvas_color.draw()
 
     def changer_theme(self, new_theme):
         """
