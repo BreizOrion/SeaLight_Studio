@@ -18,6 +18,15 @@ import file_orga as orga
 import tab_photo as photo_file
 import tab_colo as colo_file
 
+# Source - https://stackoverflow.com/a/79340292
+# Posted by asmaier
+# Retrieved 2026-03-10, License - CC BY-SA 4.0
+try:
+    import pyi_splash
+    pyi_splash.close()
+except:
+    pass
+
 
 class Application(ctk.CTk):
     """
