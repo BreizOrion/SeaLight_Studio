@@ -117,16 +117,16 @@ python src/main.py
     - Secteur : Hune, Poupe, Bâbord, Tribord ou Vide (sans zone limite tracée)
     - Portée : 1 à 6 miles nautiques
     - Inclinaison du test  : 0° ou ±25°
-        > [!NOTE]
-        > Les tests à ±5° ont les même contrainte qu'à 0°, choisissez donc 0°.
+> [!NOTE]
+> Les tests à ±5° ont les même contrainte qu'à 0°, choisissez donc 0°.
 
 4. **Tracez le graphique** :
     - Cliquez sur "Tracer le graphique" (ou appuyez sur Entrée)
 
 5. **Ajustez la position de votre graphique**
     - Utilisez l'entrée "Décalage [°]" pour ajuster la position de votre graphique dans les bornes des secteurs
-        > [!NOTE]
-        > Le décalage est une valeur chiffré mais est aussi modifiable via les flèches directionnelles: haut/bas pour un pas de 1° et gauche/droite pour un pas précis de 0.2°
+> [!NOTE]
+> Le décalage est une valeur chiffré mais est aussi modifiable via les flèches directionnelles: haut/bas pour un pas de 1° et gauche/droite pour un pas précis de 0.2°
 
 6. **Ajustement visuel**
     - Ajustez si besoin le zoom et la position du graphique avec la toolbar en dessous 
