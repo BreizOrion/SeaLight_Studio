@@ -178,28 +178,7 @@ def all_round(light_range=1, inclinaison=0):
     return zone
 
 
-def half_round_tribord(light_range=1, inclinaison=0):
-    """
-    Définit les coordonnées pour les zones interdite feu de 180° à tribord.
-
-    Args:
-        light_range (int): La portée de la lumière.
-        inclinaison (float/int): L'angle d'inclinaison.
-
-    Returns:
-        dict: Le dictionnaire d'intensité avec les coordonnées X ajoutées pour chaque zone.
-    """
-    zone = intensity_calc(light_range, inclinaison)
-
-    # angle tribord donné par USCG/ABYC-C5
-    zone[1]["X"] = [-185, -185, -210, -210, -185]
-    zone[2]["X"] = [-180, -180, -175, -175, 0, 0, 0, 0, -180]
-    zone[3]["X"] = [30, 30, 3, 3, 30]
-
-    return zone
-
-
-def half_round_babord(light_range=1, inclinaison=0):
+def half_round (light_range=1, inclinaison=0):
     """
     Définit les coordonnées pour les zones interdite d'un feu de 180° à tribord.
 
@@ -214,7 +193,7 @@ def half_round_babord(light_range=1, inclinaison=0):
 
     # angle tribord donné par USCG/ABYC-C5
     zone[1]["X"] = [-30, -30, -3, -3, -30]
-    zone[2]["X"] = [0, 0, 0, 0, 175, 175, 180, 180, 0]
+    zone[2]["X"] = [0, 0, 5, 5, 175, 175, 180, 180, 0]
     zone[3]["X"] = [185, 185, 210, 210, 185]
 
     return zone

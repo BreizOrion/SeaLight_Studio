@@ -79,10 +79,8 @@ def trace_limit(ax, secteur, range_val, inclinaison, previous_limits=None):
         zone_interdite = z.babord(range_val, inclinaison)
     elif secteur == "Tribord":
         zone_interdite = z.tribord(range_val, inclinaison)
-    elif secteur == "180 Tribord":
-        zone_interdite = z.half_round_tribord(range_val, inclinaison)
-    elif secteur == "180 Babord":
-        zone_interdite = z.half_round_babord(range_val, inclinaison)
+    elif secteur == "180":
+        zone_interdite = z.half_round(range_val, inclinaison)
     elif secteur == "360":
         zone_interdite = z.all_round(range_val, inclinaison)
     elif secteur == "Vide":
@@ -140,10 +138,8 @@ def trace_factor(ax, data, secteur):
         zone_interdite = z.babord()
     elif secteur == "Tribord":
         zone_interdite = z.tribord()
-    elif secteur == "180 Tribord":
-        zone_interdite = z.half_round_tribord()
-    elif secteur == "180 Babord":
-        zone_interdite = z.half_round_babord()
+    elif secteur == "180":
+        zone_interdite = z.half_round()
     elif secteur == "360":
         zone_interdite = z.all_round()
     elif secteur == "Vide":
