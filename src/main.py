@@ -96,7 +96,7 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
         self.dnd_bind("<<DropLeave>>", self._on_drop_leave)
         self.dnd_bind("<<Drop>>",      self._on_file_drop)
         self._create_drop_overlay()
-        
+
         # --- Barre de Menu ---
         self.menu_bar = tk.Menu(self)
         self.config(menu=self.menu_bar)
@@ -662,11 +662,11 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
 
         self.drop_label = ctk.CTkLabel(
             self.drop_overlay,
-    text=(
-        "📂\n\n"
-        "Déposez votre fichier ici\n\n"
-        "CSV • TXT"
-    ),
+            text=(
+                "📂\n\n"
+                "Déposez votre fichier ici\n\n"
+                "CSV • TXT"
+            ),
             font=ctk.CTkFont(size=28, weight="bold"),
             justify="center",
         )
