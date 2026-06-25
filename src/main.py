@@ -655,12 +655,18 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
         self.drop_overlay = ctk.CTkFrame(
             self,
             corner_radius=0,
+            border_width=4,
+            border_color="#3B82F6",
             fg_color=("gray90", "gray15"),
         )
 
         self.drop_label = ctk.CTkLabel(
             self.drop_overlay,
-            text="📂\n\nDéposez votre fichier ici",
+    text=(
+        "📂\n\n"
+        "Déposez votre fichier ici\n\n"
+        "CSV • TXT"
+    ),
             font=ctk.CTkFont(size=28, weight="bold"),
             justify="center",
         )
