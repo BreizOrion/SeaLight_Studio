@@ -11,6 +11,7 @@ import platform
 import tkinter as tk
 
 import customtkinter as ctk
+from tkinterdnd2 import TkinterDnD, DND_FILES
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 
@@ -59,7 +60,7 @@ def _apply_ax_theme(fig, ax, theme_key):
     ax.grid(color=t["grid"])
 
 
-class Application(ctk.CTk):
+class Application(ctk.CTk, TkinterDnD.DnDWrapper):
     """
     Classe principale de l'application.\n
     Gère l'interface utilisateur, le chargement des fichiers et l'affichage des graphiques.
@@ -70,7 +71,9 @@ class Application(ctk.CTk):
         Initialise la fenêtre principale, les onglets et les éléments de l'UI.
         """
         super().__init__()
-
+        self.TkdndVersion = TkinterDnD._require(self)
+        self.drop_target_register(DND_FILES)
+        
         self.file_chosen = None
         self.data = None
         self.intensity_factor = None
@@ -87,6 +90,11 @@ class Application(ctk.CTk):
         self._live_active = False
         self._live_job = None
 
+        # drag and drop
+        self.drop_target_register(DND_FILES)
+        self.dnd_bind("<<DropEnter>>", self._on_drop_enter)
+        self.dnd_bind("<<DropLeave>>", self._on_drop_leave)
+        self.dnd_bind("<<Drop>>",      self._on_file_drop)
 
         # --- Barre de Menu ---
         self.menu_bar = tk.Menu(self)
@@ -640,6 +648,41 @@ class Application(ctk.CTk):
             self.trace_photo()
             self._live_job = self.after(1000, self._live_tick)
 
+    def _on_drop_enter(self, _):
+        """Feedback visuel quand un fichier entre dans la fenêtre."""
+        self.label_fichier_photo.configure(text="📂 Déposer le fichier ici...")
+        self.label_fichier_color.configure(text="📂 Déposer le fichier ici...")
+
+    def _on_drop_leave(self, _):
+        """Restaure le label si on quitte sans déposer."""
+        if self.file_chosen:
+            name = f"Fichier sélectionné : {'/'.join(self.file_chosen.split('/')[-3:])}"
+        else:
+            name = "Aucun fichier sélectionné"
+        self.label_fichier_photo.configure(text=name)
+        self.label_fichier_color.configure(text=name)
+
+    def _on_file_drop(self, event):
+        """
+        Gère le dépôt d'un fichier par drag & drop.
+
+        Args:
+            event: L'événement DnD contenant le chemin dans event.data.
+        """
+        path = event.data.strip()
+        # Windows : chemins avec espaces entre accolades {C:/mon fichier.txt}
+        if path.startswith("{") and path.endswith("}"):
+            path = path[1:-1]
+        # Linux/macOS : chemin au format URI  file:///home/user/mon%20fichier.txt
+        if path.startswith("file://"):
+            path = unquote(path[7:])  # retire "file://" et décode %20, etc.
+
+        self.file_chosen = path
+        name = f"Fichier sélectionné : {'/'.join(path.split('/')[-3:])}"
+        self.label_fichier_photo.configure(text=name)
+        self.label_fichier_color.configure(text=name)
+        self.ax_photo.set_autoscale_on(True)
+
     def a_propos(self):
         """
         Affiche un message d'à propos avec quelques informations
@@ -647,7 +690,7 @@ class Application(ctk.CTk):
         """
         tk.messagebox.showinfo(
             "À propos",
-            "Analyse Photométrique \n\nMantague - Breizelec.\n\nVersion v2.3",
+            "Analyse Photométrique \n\nMantague - Breizelec.\n\nVersion v2.4",
         )
 
 
