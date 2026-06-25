@@ -73,7 +73,7 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
         super().__init__()
         self.TkdndVersion = TkinterDnD._require(self)
         self.drop_target_register(DND_FILES)
-        
+
         self.file_chosen = None
         self.data = None
         self.intensity_factor = None
@@ -95,7 +95,8 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
         self.dnd_bind("<<DropEnter>>", self._on_drop_enter)
         self.dnd_bind("<<DropLeave>>", self._on_drop_leave)
         self.dnd_bind("<<Drop>>",      self._on_file_drop)
-
+        self._create_drop_overlay()
+        
         # --- Barre de Menu ---
         self.menu_bar = tk.Menu(self)
         self.config(menu=self.menu_bar)
@@ -648,13 +649,43 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
             self.trace_photo()
             self._live_job = self.after(1000, self._live_tick)
 
+    def _create_drop_overlay(self):
+        """Overlay affiché pendant un drag & drop."""
+
+        self.drop_overlay = ctk.CTkFrame(
+            self,
+            corner_radius=0,
+            fg_color=("gray90", "gray15"),
+        )
+
+        self.drop_label = ctk.CTkLabel(
+            self.drop_overlay,
+            text="📂\n\nDéposez votre fichier ici",
+            font=ctk.CTkFont(size=28, weight="bold"),
+            justify="center",
+        )
+
+        self.drop_label.place(
+            relx=0.5,
+            rely=0.5,
+            anchor="center",
+        )
+
     def _on_drop_enter(self, _):
-        """Feedback visuel quand un fichier entre dans la fenêtre."""
-        self.label_fichier_photo.configure(text="📂 Déposer le fichier ici...")
-        self.label_fichier_color.configure(text="📂 Déposer le fichier ici...")
+        self.drop_overlay.place(
+            relx=0,
+            rely=0,
+            relwidth=1,
+            relheight=1,
+        )
+
+        self.drop_overlay.lift()
 
     def _on_drop_leave(self, _):
         """Restaure le label si on quitte sans déposer."""
+
+        self.drop_overlay.place_forget()
+
         if self.file_chosen:
             name = f"Fichier sélectionné : {'/'.join(self.file_chosen.split('/')[-3:])}"
         else:
@@ -669,6 +700,9 @@ class Application(ctk.CTk, TkinterDnD.DnDWrapper):
         Args:
             event: L'événement DnD contenant le chemin dans event.data.
         """
+
+        self.drop_overlay.place_forget()
+
         path = event.data.strip()
         # Windows : chemins avec espaces entre accolades {C:/mon fichier.txt}
         if path.startswith("{") and path.endswith("}"):
